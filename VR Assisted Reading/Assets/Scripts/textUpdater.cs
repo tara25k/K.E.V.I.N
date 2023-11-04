@@ -5,14 +5,22 @@ using UnityEngine.UI;
 using TMPro;
 public class textUpdater : MonoBehaviour
 {
-    public TextMeshProUGUI sampleText;
+    public TextMeshPro sampleText;
     public Button changeTextButton;
-    public string newString;
+    private int i;
+    private string[] newStringArray;
+
     // Start is called before the first frame update
     void Start()
     {
+        i=0;
+        List<string> newStringArray = new List<string>();
+        var newString = "..And this is some new text";
+        var newString2 = "..And this is some new text again!!!";
+        newStringArray.Add(newString);
+        newStringArray.Add(newString2);
         changeTextButton.onClick.AddListener(ButtonClickHandler);
-        newString = "..And this is some new text";
+
     }
 
     // Update is called once per frame
@@ -23,8 +31,13 @@ public class textUpdater : MonoBehaviour
     private void ButtonClickHandler()
     {
         // Handle the button click
-        Debug.Log("Button Clicked!");
-        sampleText.text = newString;
+        Debug.Log("pressed next button");
+        Debug.Log("Text");
+        sampleText.text = "New text!";
+        i=i+1;
+        // panel1.transform.position = Vector3.MoveTowards(panel1.transform.position, inactivePosition, 8);
+
+        // panel2.transform.position = Vector3.MoveTowards(inactivePosition, readingPosition, 8);
 
     }
 }
