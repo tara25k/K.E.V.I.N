@@ -4,6 +4,7 @@
 
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.Events;
 public enum FlipMode
@@ -13,11 +14,16 @@ public enum FlipMode
 }
 [ExecuteInEditMode]
 public class Book : MonoBehaviour {
+
+    public List<string> dummyBatchList = new List<string>();
     public Canvas canvas;
     [SerializeField]
     RectTransform BookPanel;
     public Sprite background;
+
+    public Texture templateTexture;
     public Texture[] bookPages;
+    public string[] doubleDummyBatchList;
     public bool interactable=true;
     public bool enableShadowEffect=true;
     //represent the index of the sprite shown in the right page
@@ -69,6 +75,22 @@ public class Book : MonoBehaviour {
 
     void Start()
     {
+
+        dummyBatchList.AddRange(new string[] {"Page 1", "Page 2", "Page 3", "Page 4", "Page 5", "Page 6"});
+
+
+        string[] doubleDummyBatchList = new string[dummyBatchList.Count * 2];
+        for (int i = 0; i < dummyBatchList.Count; i++)
+        {
+            doubleDummyBatchList[i * 2] = dummyBatchList[i];
+            doubleDummyBatchList[i * 2 + 1] = dummyBatchList[i];
+        }
+
+        bookPages = new Texture[doubleDummyBatchList.Length];
+        for (int i=0; i<doubleDummyBatchList.Length; i++){
+            bookPages[i] = templateTexture;
+        }
+
         if (!canvas) canvas=GetComponentInParent<Canvas>();
         if (!canvas) Debug.LogError("Book should be a child to canvas");
 

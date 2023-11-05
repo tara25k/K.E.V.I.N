@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.UI;
+using TMPro;
 [RequireComponent(typeof(Book))]
+
 public class AutoFlip : MonoBehaviour {
     public FlipMode Mode;
     public float PageFlipTime = 1;
@@ -9,9 +13,18 @@ public class AutoFlip : MonoBehaviour {
     public bool AutoStartFlip=true;
     public Book ControledBook;
     public int AnimationFramesCount = 40;
+
+    public List<string> dummyBatchList = new List<string>();
+
+    public int i;
+
+    public TextMeshPro sampleText; 
     bool isFlipping = false;
     // Use this for initialization
     void Start () {
+        dummyBatchList.AddRange(new string[] {"Page 1", "Page 2", "Page 3", "Page 4", "Page 5", "Page 6"});
+        i = 0;
+        sampleText.text = dummyBatchList[i];
         if (!ControledBook)
             ControledBook = GetComponent<Book>();
         if (AutoStartFlip)
@@ -38,6 +51,7 @@ public class AutoFlip : MonoBehaviour {
         float h = Mathf.Abs(ControledBook.EndBottomRight.y) * 0.9f;
         float dx = (xl)*2 / AnimationFramesCount;
         StartCoroutine(FlipRTL(xc, xl, h, frameTime, dx));
+        
     }
     public void FlipLeftPage()
     {
@@ -106,6 +120,9 @@ public class AutoFlip : MonoBehaviour {
             yield return new WaitForSeconds(frameTime);
             x -= dx;
         }
+        i=i+1;
+        string displayText = dummyBatchList[i];
+        sampleText.text = displayText;
         ControledBook.ReleasePage();
     }
     IEnumerator FlipLTR(float xc, float xl, float h, float frameTime, float dx)
@@ -120,6 +137,9 @@ public class AutoFlip : MonoBehaviour {
             yield return new WaitForSeconds(frameTime);
             x += dx;
         }
+        i=i-1;
+        string displayText = dummyBatchList[i];
+        sampleText.text = displayText;
         ControledBook.ReleasePage();
     }
 }
